@@ -38,7 +38,8 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
 
     LazyColumn(
         verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxSize().padding(15.dp,20.dp,15.dp,8.dp).background(Color(135,68,67,67)),
+        modifier = Modifier.fillMaxSize()
+            .background(Color(255, 248, 220) ).padding(15.dp,20.dp,15.dp,8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
