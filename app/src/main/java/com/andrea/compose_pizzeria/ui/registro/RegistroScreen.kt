@@ -1,6 +1,7 @@
 package com.andrea.compose_pizzeria.ui.registro
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -24,6 +26,7 @@ import com.andrea.compose_pizzeria.R
 import com.andrea.compose_pizzeria.data.ClienteDTO
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.andrea.compose_pizzeria.ui.login.PantallaPrincipal
@@ -35,13 +38,13 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
 
     LazyColumn(
         verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxSize().padding(35.dp),
+        modifier = Modifier.fillMaxSize().padding(15.dp,20.dp,15.dp,8.dp).background(Color(135,68,67,67)),
         horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
         item {
             Image(
-                modifier = Modifier.size(200.dp),
+                modifier = Modifier.size(150.dp),
                 painter = painterResource(R.drawable.logopizzeria),
                 contentDescription = "logo"
             )
@@ -49,47 +52,56 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
                 imageVector = Icons.Filled.Add,
                 contentDescription = ""
             )*/
-            
-            TextField(
+
+            //pone el nombre del textField en la parte superior
+            OutlinedTextField(
                 
                 value= cliente.dni,
-                onValueChange = {},
-                label = { Text("DNI") }
+                //en esta variable llama a mi pantalla principal(viewModel) y llamo al metodo de resgistroViewModel (onValueChange)
+                //escucha el cambio crea una copia y actualiza el campo en concreto (en este caso dni)
+                onValueChange = {viewModel.onClienteChange(cliente.copy(dni=it))},
+                label = { Text("DNI") },
+                modifier = Modifier.fillMaxSize().padding(10.dp)
                 
             )
-            TextField(
+            OutlinedTextField(
 
                 value= cliente.direccion,
-                onValueChange = {},
-                label = { Text("Dirección") }
+                onValueChange = {viewModel.onClienteChange(cliente.copy(direccion = it))},
+                label = { Text("Dirección") },
+                modifier = Modifier.fillMaxSize().padding(8.dp)
 
             )
-            TextField(
+            OutlinedTextField(
 
                 value= cliente.telefono,
-                onValueChange = {},
-                label = { Text("Telefono") }
+                onValueChange = {viewModel.onClienteChange(cliente.copy(telefono=it))},
+                label = { Text("Telefono") },
+                modifier = Modifier.fillMaxSize().padding(8.dp)
 
             )
-            TextField(
+            OutlinedTextField(
 
                 value= cliente.email,
-                onValueChange = {},
-                label = { Text("Email") }
+                onValueChange = {viewModel.onClienteChange(cliente.copy(email=it))},//escucha el cambio
+                label = { Text("Email") },
+                modifier = Modifier.fillMaxSize().padding(8.dp)
 
             )
-            TextField(
+            OutlinedTextField(
 
                 value= cliente.nombre,
-                onValueChange = {},
-                label = { Text("Nombre") }
+                onValueChange = {viewModel.onClienteChange(cliente.copy(nombre=it))},
+                label = { Text("Nombre") },
+                modifier = Modifier.fillMaxSize().padding(8.dp)
 
             )
-            TextField(
+            OutlinedTextField(
 
                 value= cliente.password,
-                onValueChange = {},
-                label = { Text("Password") }
+                onValueChange = {viewModel.onClienteChange(cliente.copy(password = it))},
+                label = { Text("Password") },
+                modifier = Modifier.fillMaxSize().padding(8.dp)
             )
             Button(onClick = {},
                 modifier = Modifier
