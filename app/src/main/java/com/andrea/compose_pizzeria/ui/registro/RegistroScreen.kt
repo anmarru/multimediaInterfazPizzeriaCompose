@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,10 +18,9 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -41,6 +39,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.MutableLiveData
 import com.andrea.compose_pizzeria.ui.login.PantallaPrincipal
 import com.example.compose.backgroundDark
 
@@ -51,10 +50,15 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
     //variable para color del OutlinedTextField
     val colorMarron= Color(0xDC573E36)
 
-    //creo la variable que hace referencia al boton habilitado esta siempre escuchando
+
+    //creo la variable que hace referencia (lo observa) al boton habilitado esta siempre escuchando
     val botonHabilitado:Boolean by viewModel.botonHabilitado.observeAsState(false)
     println(cliente.toString())
 
+    //creo las variables que van a observar los errores
+    val errorNombre by viewModel.errorNombre.observeAsState()
+    val errorEmail by viewModel.errorEmail.observeAsState()
+    val errorPassword by viewModel.errorPassword.observeAsState()
 
 
     LazyColumn(
@@ -121,6 +125,13 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
                     .padding(top = 5.dp)
 
             )
+            //error de email
+            errorEmail?.let{
+                Text(
+                    text =it,
+                    color= Color.Red,
+                )
+            }
             OutlinedTextField(
 
                 value= cliente.nombre,
@@ -131,6 +142,14 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
                    .padding(top = 5.dp)
 
             )
+            //error de nombre
+            errorNombre?.let {
+                Text(
+                    text = it,
+                    color = Color.Red,
+                )
+            }
+
             //variable de ver el password en false por defecto
             var showPassword by remember { mutableStateOf(value = false) }
             OutlinedTextField(
@@ -168,6 +187,14 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
                     }
                 }
             )
+            //error de password
+            errorPassword?.let {
+                Text(
+                    text = it,
+                    color = Color.Red,
+                )
+            }
+
             Button(onClick = {},
                 modifier = Modifier
                     .padding(start = 8.dp),

@@ -11,9 +11,16 @@ class RegistroViewModel {
     //variable para boton de registro habilitado
     val botonHabilitado= MutableLiveData(false)
 
+    //variables de error para los campos
+    val errorNombre = MutableLiveData<String?>()
+    val errorEmail = MutableLiveData<String?>()
+    val errorPassword = MutableLiveData<String?>()
+
     //funcion para que cree un nuevo cliente actualizado con los valores y se usa en el RegistroScreen
     fun onClienteChange(newCliente: ClienteDTO){
         cliente.value=newCliente
+        //
+        validarCampos(newCliente)
         //continuacion, funcion habilitar el boton de registro
         botonHabilitado.value = when {
             //isBlank hace q no tome los espacios como caracteres mejor q empty
@@ -23,9 +30,32 @@ class RegistroViewModel {
             newCliente.telefono.isBlank() -> false
             newCliente.direccion.isBlank() -> false
             newCliente.password.isBlank() -> false
+            errorEmail.value==null -> false
+            errorNombre.value== null-> false
+            errorPassword.value== null-> false
             else ->  true
         }
+
     }
+
+    //creo la funcion que valida los campos y verifica si son validos
+    private fun validarCampos(cliente: ClienteDTO){
+        //valido el nombre
+        errorNombre.value= if (cliente.nombre.any{it.isDigit()}){
+            "El nombre no debe contener digitos"
+        }else null
+
+        //valido email
+        errorEmail.value = if (cliente.email.isNotEmpty()&&!cliente.email.matches(Regex("^[\\w-.]+@[\\w-]+\\.[a-z]{2,3}$"))) {
+            "Formato de email inválido"
+        }else null
+
+        //si el password no esta vacio y tiene mas caracteres
+        errorPassword.value= if (cliente.password.isNotEmpty()&& cliente.password.length< 4){
+            "La contraseña debe tener al menos 4 caracteres"
+        }else null
+    }
+
 
 
 }
