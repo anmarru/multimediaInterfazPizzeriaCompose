@@ -40,13 +40,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.MutableLiveData
+import com.andrea.compose_pizzer.RegistroViewModel
 import com.andrea.compose_pizzeria.ui.login.PantallaPrincipal
 import com.example.compose.backgroundDark
 
 @Composable
-fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
+fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
 
-    val cliente: ClienteDTO by viewModel.cliente.observeAsState(ClienteDTO(0,"","","","","","", listOf()))
+    val cliente: ClienteDTO by viewModel.cliente.observeAsState(ClienteDTO())
     //variable para color del OutlinedTextField
     val colorMarron= Color(0xDC573E36)
 
@@ -111,9 +112,11 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
                 label = { Text("Telefono") },
                 modifier = Modifier.fillMaxSize()
                     .background(colorMarron, shape= RoundedCornerShape(5.dp))
-                    .padding(top = 5.dp)
-
-
+                    .padding(top = 5.dp),
+                //para que en el telefono  solo te salga el teclado numerico
+                keyboardOptions= KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Phone
+                )
             )
             OutlinedTextField(
 
@@ -129,7 +132,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
             errorEmail?.let{
                 Text(
                     text =it,
-                    color= Color.Red,
+                    color= MaterialTheme.colorScheme.error,
                 )
             }
             OutlinedTextField(
@@ -146,7 +149,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
             errorNombre?.let {
                 Text(
                     text = it,
-                    color = Color.Red,
+                    color = MaterialTheme.colorScheme.error,
                 )
             }
 
@@ -191,7 +194,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel= RegistroViewModel()){
             errorPassword?.let {
                 Text(
                     text = it,
-                    color = Color.Red,
+                    color = MaterialTheme.colorScheme.error,
                 )
             }
 

@@ -1,4 +1,4 @@
-package com.andrea.compose_pizzeria.ui.registro
+package com.andrea.compose_pizzer
 
 import androidx.lifecycle.MutableLiveData
 import com.andrea.compose_pizzeria.data.ClienteDTO
@@ -6,20 +6,25 @@ import com.andrea.compose_pizzeria.data.ClienteDTO
 
 class RegistroViewModel {
     //creo mi variable registro con la clase Clientedto para tener los campos
-    val cliente= MutableLiveData ( ClienteDTO(0,"","","","","","", listOf()))
+    val cliente: MutableLiveData<ClienteDTO> = MutableLiveData ( ClienteDTO())
 
     //variable para boton de registro habilitado
     val botonHabilitado= MutableLiveData(false)
 
+    //variable de la clase errormensaje para validar los campos
+    //val errorMensaje= MutableLiveData(ErrorMensaje())
+
     //variables de error para los campos
-    val errorNombre = MutableLiveData<String?>()
-    val errorEmail = MutableLiveData<String?>()
-    val errorPassword = MutableLiveData<String?>()
+    val errorNombre: MutableLiveData<String?> = MutableLiveData<String?>("")
+    val errorEmail: MutableLiveData<String?> = MutableLiveData<String?>("")
+    val errorPassword: MutableLiveData<String?> = MutableLiveData<String?>("")
 
     //funcion para que cree un nuevo cliente actualizado con los valores y se usa en el RegistroScreen
     fun onClienteChange(newCliente: ClienteDTO){
         cliente.value=newCliente
-        //
+        //errorMensaje.value = ErrorMensaje(cliente.nombre, cliente.value.email, cliente.value.password)
+
+        //valido los campos
         validarCampos(newCliente)
         //continuacion, funcion habilitar el boton de registro
         botonHabilitado.value = when {

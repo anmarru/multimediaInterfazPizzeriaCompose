@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import com.andrea.compose_pizzer.RegistroViewModel
 import com.andrea.compose_pizzeria.ui.registro.PantallaInicioRegistro
-import com.andrea.compose_pizzeria.ui.registro.RegistroViewModel
 import com.example.compose.Mitema
 
 class MainActivity : ComponentActivity() {
