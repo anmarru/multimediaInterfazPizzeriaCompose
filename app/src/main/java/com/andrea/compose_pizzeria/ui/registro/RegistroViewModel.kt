@@ -35,9 +35,9 @@ class RegistroViewModel {
             newCliente.telefono.isBlank() -> false
             newCliente.direccion.isBlank() -> false
             newCliente.password.isBlank() -> false
-            errorEmail.value==null -> false
-            errorNombre.value== null-> false
-            errorPassword.value== null-> false
+            !(errorEmail.value==null) -> false
+           !( errorNombre.value== null)-> false
+            !(errorPassword.value== null)-> false
             else ->  true
         }
 
