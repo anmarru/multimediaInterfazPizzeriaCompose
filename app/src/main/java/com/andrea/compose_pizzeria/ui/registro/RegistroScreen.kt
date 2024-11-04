@@ -1,5 +1,6 @@
 package com.andrea.compose_pizzeria.ui.registro
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -39,10 +39,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.MutableLiveData
 import com.andrea.compose_pizzer.RegistroViewModel
-import com.andrea.compose_pizzeria.ui.login.PantallaPrincipal
-import com.example.compose.backgroundDark
+
 
 @Composable
 fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
@@ -163,7 +161,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 modifier = Modifier.fillMaxSize()
                     .background(colorMarron, shape= RoundedCornerShape(5.dp))
                     .padding(top= 5.dp),
-                //condicion para cer el password
+                //condicion para ver el password
                 visualTransformation = if (showPassword) {
                     VisualTransformation.None
                 } else {
@@ -198,7 +196,10 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 )
             }
 
-            Button(onClick = {},
+            Button(onClick = {
+                //al darle al boton de registrarse se llama al metodo del registrar cliente del RegistroviewModel
+                viewModel.registrarCliente(cliente)
+            },
                 modifier = Modifier
                     .padding(start = 8.dp),
                 //el enable hace que no se habilite si esta en false

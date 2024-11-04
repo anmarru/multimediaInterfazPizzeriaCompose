@@ -1,5 +1,6 @@
 package com.andrea.compose_pizzer
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.andrea.compose_pizzeria.data.ClienteDTO
 
@@ -23,7 +24,7 @@ class RegistroViewModel {
     fun onClienteChange(newCliente: ClienteDTO){
         cliente.value=newCliente
         //errorMensaje.value = ErrorMensaje(cliente.nombre, cliente.value.email, cliente.value.password)
-
+        Log.d("Registro", "Cliente actualizado: $newCliente")
         //valido los campos
         validarCampos(newCliente)
         //continuacion, funcion habilitar el boton de registro
@@ -35,15 +36,20 @@ class RegistroViewModel {
             newCliente.telefono.isBlank() -> false
             newCliente.direccion.isBlank() -> false
             newCliente.password.isBlank() -> false
-            !(errorEmail.value==null) -> false
-           !( errorNombre.value== null)-> false
-            !(errorPassword.value== null)-> false
+            errorEmail.value != null -> false
+           errorNombre.value != null -> false
+            errorPassword.value != null -> false
             else ->  true
         }
 
     }
 
-    //creo la funcion que valida los campos y verifica si son validos
+    //funcion para registrar el cliente y se haga log del ClienteDTO
+    fun registrarCliente(cliente: ClienteDTO){
+        Log.d("Registro", "Cliente registrado: $cliente")
+    }
+
+    // creo la funcion que valida los campos y verifica si son validos
     private fun validarCampos(cliente: ClienteDTO){
         //valido el nombre
         errorNombre.value= if (cliente.nombre.any{it.isDigit()}){
@@ -60,7 +66,6 @@ class RegistroViewModel {
             "La contraseña debe tener al menos 4 caracteres"
         }else null
     }
-
 
 
 }
