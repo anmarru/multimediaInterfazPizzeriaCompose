@@ -2,6 +2,8 @@ package com.andrea.compose_pizzeria.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Badge
@@ -35,10 +38,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.andrea.compose_pizzeria.R
 import com.andrea.compose_pizzeria.data.LineaPedidoDTO
 import com.andrea.compose_pizzeria.data.ProductoDTO
@@ -126,13 +135,14 @@ fun Home(viewModel: HomeViewModel ) {
         OutlinedCard(
             modifier = Modifier
                 .padding(8.dp),
+                //.fillMaxWidth()
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             ),
             elevation = CardDefaults.cardElevation(
-                defaultElevation = 8.dp
+                defaultElevation = 12.dp
             ),
-            shape = MaterialTheme.shapes.extraLarge
+            shape = MaterialTheme.shapes.large
         ) {
             Column(
                 modifier = Modifier.padding(24.dp)
@@ -151,6 +161,7 @@ fun Home(viewModel: HomeViewModel ) {
                     modifier = Modifier
                         .padding(8.dp)
                         .size(200.dp)
+                        .clip(RoundedCornerShape(16.dp))//borde redono
                         .align(Alignment.CenterHorizontally)
                 )
                 //si los productos son distintos de bebida me enseña los ingredientes
@@ -168,7 +179,11 @@ fun Home(viewModel: HomeViewModel ) {
                 Text(
                     text = "${producto.precio}€",
                     //estilo para el precio
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = Color.Green, //color mas resaltado en verde
+                        fontWeight = FontWeight.Bold, //texto en negrita
+                        fontSize = 20.sp // Aumentar el tamaño de la fuente
+                    ),
                     modifier = Modifier.padding(8.dp)
                 )
                 //para poner los botones de + y - del producto
@@ -177,10 +192,13 @@ fun Home(viewModel: HomeViewModel ) {
                 var seleccionar by remember { mutableStateOf<SIZE?>(producto.size) }
 
                 Row(
-                    modifier = Modifier.padding(1.dp)
+                    modifier = Modifier.padding(1.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     TextButton(
-                        onClick = { if (contador != 1) contador-- }) {
+                        onClick = { if (contador != 1) contador-- },
+                        modifier = Modifier.scale(1f)
+                        ) {
 
                         Text("-")
                     }
@@ -191,7 +209,10 @@ fun Home(viewModel: HomeViewModel ) {
                         style = MaterialTheme.typography.titleLarge
 
                     )
-                    TextButton(onClick = { contador++ }) {
+                    TextButton(onClick = { contador++ },
+                        modifier = Modifier.scale(1f)
+                        ) {
+
                         Text("+")
                     }
 
