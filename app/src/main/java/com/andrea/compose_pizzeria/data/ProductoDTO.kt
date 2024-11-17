@@ -1,10 +1,10 @@
 package com.andrea.compose_pizzeria.data
 
 data class ProductoDTO(
-    val id: Int,
+    val id: Int=0,
     val nombre: String,
-    val precio: Float,
-    val size: SIZE,
-    val ingredientes: List<IngredienteDTO>,
+    val precio: Double,
+    var size: SIZE? = null,
+    val ingredientes: List<IngredienteDTO> = emptyList(),
     val tipo: TIPO
 )

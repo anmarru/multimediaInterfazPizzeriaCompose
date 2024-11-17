@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.andrea.compose_pizzer.RegistroViewModel
+import com.andrea.compose_pizzeria.ui.home.Home
+import com.andrea.compose_pizzeria.ui.home.HomeViewModel
 import com.andrea.compose_pizzeria.ui.login.LoginViewModel
 import com.andrea.compose_pizzeria.ui.login.PantallaPrincipalLogin
 import com.andrea.compose_pizzeria.ui.registro.PantallaInicioRegistro
@@ -24,8 +26,12 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }*/
-            //Mitema { PantallaInicioRegistro(RegistroViewModel()) }
-            Mitema { PantallaPrincipalLogin(LoginViewModel()) }
+
+            Mitema {
+                //PantallaPrincipalLogin(LoginViewModel())
+                //PantallaInicioRegistro(RegistroViewModel())
+                Home(HomeViewModel())
+            }
         }
     }
 }

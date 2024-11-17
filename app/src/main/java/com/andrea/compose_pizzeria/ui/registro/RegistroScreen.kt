@@ -47,7 +47,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
 
     val cliente: ClienteDTO by viewModel.cliente.observeAsState(ClienteDTO())
     //variable para color del OutlinedTextField
-    val colorMarron= Color(0xDC573E36)
+    //val colorMarron= Color(0xDC573E36)
 
 
     //creo la variable que hace referencia (lo observa) al boton habilitado esta siempre escuchando
@@ -63,7 +63,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
     LazyColumn(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize()
-            .background(Color(160, 120, 90, 255))
+            .background(Color(180, 163, 94, 215))
             .padding(15.dp,20.dp,15.dp,8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -88,7 +88,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 onValueChange = {viewModel.onClienteChange(cliente.copy(dni=it))},
                 label = { Text("DNI") },
                 modifier = Modifier.fillMaxSize()
-                    .background(colorMarron, shape= RoundedCornerShape(5.dp))
+
 
 
                 
@@ -99,7 +99,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 onValueChange = {viewModel.onClienteChange(cliente.copy(direccion = it))},
                 label = { Text("Dirección") },
                 modifier = Modifier.fillMaxSize()
-                    .background(colorMarron, shape= RoundedCornerShape(5.dp))
+                    //.background(colorMarron, shape= RoundedCornerShape(5.dp))
                     .padding(top = 5.dp)
 
             )
@@ -109,7 +109,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 onValueChange = {viewModel.onClienteChange(cliente.copy(telefono=it))},
                 label = { Text("Telefono") },
                 modifier = Modifier.fillMaxSize()
-                    .background(colorMarron, shape= RoundedCornerShape(5.dp))
+                    //.background(colorMarron, shape= RoundedCornerShape(5.dp))
                     .padding(top = 5.dp),
                 //para que en el telefono  solo te salga el teclado numerico
                 keyboardOptions= KeyboardOptions.Default.copy(
@@ -122,7 +122,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 onValueChange = {viewModel.onClienteChange(cliente.copy(email=it))},//escucha el cambio
                 label = { Text("Email") },
                 modifier = Modifier.fillMaxSize()
-                    .background(colorMarron, shape= RoundedCornerShape(5.dp))
+                    //.background(colorMarron, shape= RoundedCornerShape(5.dp))
                     .padding(top = 5.dp)
 
             )
@@ -139,7 +139,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 onValueChange = {viewModel.onClienteChange(cliente.copy(nombre=it))},
                 label = { Text("Nombre") },
                 modifier = Modifier.fillMaxSize()
-                    .background(colorMarron, shape= RoundedCornerShape(5.dp))
+                    //.background(colorMarron, shape= RoundedCornerShape(5.dp))
                    .padding(top = 5.dp)
 
             )
@@ -159,7 +159,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                 onValueChange = {viewModel.onClienteChange(cliente.copy(password = it))},
                 label = { Text("Password") },
                 modifier = Modifier.fillMaxSize()
-                    .background(colorMarron, shape= RoundedCornerShape(5.dp))
+                   // .background(colorMarron, shape= RoundedCornerShape(5.dp))
                     .padding(top= 5.dp),
                 //condicion para ver el password
                 visualTransformation = if (showPassword) {
