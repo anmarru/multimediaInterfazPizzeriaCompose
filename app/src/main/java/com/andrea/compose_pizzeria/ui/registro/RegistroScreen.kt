@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.andrea.compose_pizzer.RegistroViewModel
+import com.andrea.compose_pizzeria.ui.componentes.EmailTextField
 
 
 @Composable
@@ -116,7 +117,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                     keyboardType = KeyboardType.Phone
                 )
             )
-            OutlinedTextField(
+            /*OutlinedTextField(
 
                 value= cliente.email,
                 onValueChange = {viewModel.onClienteChange(cliente.copy(email=it))},//escucha el cambio
@@ -125,7 +126,8 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
                     //.background(colorMarron, shape= RoundedCornerShape(5.dp))
                     .padding(top = 5.dp)
 
-            )
+            )*/
+            EmailTextField(cliente, viewModel::onClienteChange)
             //error de email
             errorEmail?.let{
                 Text(

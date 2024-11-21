@@ -3,7 +3,6 @@ package com.andrea.compose_pizzeria.ui.login
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,7 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -36,11 +34,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import com.andrea.compose_pizzeria.R
 import com.andrea.compose_pizzeria.data.ClienteDTO
+import com.andrea.compose_pizzeria.ui.componentes.EmailTextField
 import com.andrea.compose_pizzeria.ui.registro.TextoCentrado
-import java.util.Objects
+
 
 @Composable
 fun PantallaPrincipalLogin(viewModel: LoginViewModel =LoginViewModel()) {
@@ -69,13 +67,9 @@ fun PantallaPrincipalLogin(viewModel: LoginViewModel =LoginViewModel()) {
                 painter = painterResource(R.drawable.logopizzeria),
                 contentDescription = "logo"
             )
-            /*Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = ""
-            )*/
 
             //pone el nombre del textField en la parte superior
-            OutlinedTextField(
+            /*OutlinedTextField(
                 value= cliente.email,
                 //en esta variable llama a mi pantalla principal(viewModel) y llamo al metodo de loginViewModel (onValueChange)
                 //escucha el cambio crea una copia y actualiza el campo en concreto (en este caso email)
@@ -85,7 +79,9 @@ fun PantallaPrincipalLogin(viewModel: LoginViewModel =LoginViewModel()) {
                     .fillMaxWidth()
                     .background(colorMarron, shape = RoundedCornerShape(5.dp))
                     .padding(top = 16.dp)
-            )
+            )*/
+            //funcion para el email
+            EmailTextField(cliente, viewModel::onClienteChange)
             //error email
             errorEmail?.let {
                 Text(
@@ -97,6 +93,7 @@ fun PantallaPrincipalLogin(viewModel: LoginViewModel =LoginViewModel()) {
 
 
             //variable ver contraseña false por defecto
+
             var showPassword by remember { mutableStateOf(value =false) }
             OutlinedTextField(
                 value = cliente.password,

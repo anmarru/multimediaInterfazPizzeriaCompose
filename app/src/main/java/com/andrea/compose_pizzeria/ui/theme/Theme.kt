@@ -270,7 +270,7 @@ fun Mitema(
       }*/
       
       darkTheme -> darkScheme
-      else -> lightScheme
+      else -> darkScheme
   }
 
   MaterialTheme(

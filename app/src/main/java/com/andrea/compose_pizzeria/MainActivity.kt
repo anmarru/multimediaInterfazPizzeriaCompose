@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
             }*/
 
             Mitema {
-                //PantallaPrincipalLogin(LoginViewModel())
+              // PantallaPrincipalLogin(LoginViewModel())
                 //PantallaInicioRegistro(RegistroViewModel())
                 Home(HomeViewModel())
             }

@@ -1,8 +1,8 @@
 package com.andrea.compose_pizzeria.ui.home
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,8 +40,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -57,12 +57,14 @@ import com.example.compose.Mitema
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Home(viewModel: HomeViewModel ) {
+fun Home(viewModel: HomeViewModel) {
     //observo la lista de productos que estan en la cesta, puede estar vacia
     val productosCesta: List<LineaPedidoDTO> by viewModel.cesta.observeAsState(initial = emptyList())
 
     //calculo la suma de todos los productos en el carrito
     val totalProductos = productosCesta.sumOf { it.cantidad }
+
+
 
     Column {
         TopAppBar(
@@ -87,83 +89,98 @@ fun Home(viewModel: HomeViewModel ) {
         )
 
 
-            //para que todos los productos se puedan ver hacia abajo
-            LazyColumn(
-                //verticalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
-                    .padding(10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(bottom = 50.dp)
-            ) {
-                //funciones para cada tipo de producto
-                item {
-                    Image(
-                        painter = painterResource(id = R.drawable.logopizzeria),
-                        contentDescription = stringResource(id = R.string.app_name),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                //llamo a la variable PRODUCTOS DE HomeViewModel para que me de los productos segun el tipo de producto
-                item {
-                    ProductoItem(
-                        "Pastas",
-                        viewModel.PRODUCTOS.filter { it.tipo == TIPO.PASTA },
-                        viewModel
-                    )
-                }
-                item {
-                    ProductoItem(
-                        "Pizzas",
-                        viewModel.PRODUCTOS.filter { it.tipo == TIPO.PIZZA },
-                        viewModel
-                    )
-                }
-                item {
-                    ProductoItem(
-                        "Bebidas",
-                        viewModel.PRODUCTOS.filter { it.tipo == TIPO.BEBIDA },
-                        viewModel
-                    )
-                }
+        //para que todos los productos se puedan ver hacia abajo
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(bottom = 50.dp)
+        ) {
+
+            item {
+                Image(
+                    painter = painterResource(id = R.drawable.logopizzeria),
+                    contentDescription = stringResource(id = R.string.app_name),
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
+            //llamo a la variable PRODUCTOS DE HomeViewModel para que me de los productos segun el tipo de producto
+            item {
+                ProductoItem(
+                    "Pastas",
+                    viewModel.PRODUCTOS.filter { it.tipo == TIPO.PASTA },
+                    viewModel
+                )
+            }
+            item {
+                ProductoItem(
+                    "Pizzas",
+                    viewModel.PRODUCTOS.filter { it.tipo == TIPO.PIZZA },
+                    viewModel
+                )
+            }
+            item {
+                ProductoItem(
+                    "Bebidas",
+                    viewModel.PRODUCTOS.filter { it.tipo == TIPO.BEBIDA },
+                    viewModel
+                )
+            }
+        }
 
     }
 }
-    //funcion que enseña los productos en una carta con mas funcionalidades
-    @Composable
-    fun TarjetadeProductos(producto: ProductoDTO, viewModel: HomeViewModel) {
-        OutlinedCard(
-            modifier = Modifier
-                .padding(8.dp),
-                //.fillMaxWidth()
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 12.dp
-            ),
-            shape = MaterialTheme.shapes.large
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp)
-            ) {
-                Text(
-                    text = producto.nombre,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
 
-                //variable para agregar las imagenes
-                val imagenProducto = viewModel.imagenesProducto(producto)
-                Image(
-                    painter = painterResource(id = imagenProducto),
-                    contentDescription = producto.nombre,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .size(200.dp)
-                        .clip(RoundedCornerShape(16.dp))//borde redono
-                        .align(Alignment.CenterHorizontally)
-                )
+//funcion que enseña los productos en una carta con mas funcionalidades
+@Composable
+fun TarjetadeProductos(producto: ProductoDTO, viewModel: HomeViewModel) {
+
+
+    OutlinedCard(
+        modifier = Modifier
+            .padding(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 12.dp
+        ),
+        shape = MaterialTheme.shapes.large
+    ) {
+        Column(
+            modifier = Modifier.padding(24.dp)
+        ) {
+            Text(
+                text = producto.nombre,
+                color =  Color(180, 152, 61, 255),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+            //variable para agregar las imagenes
+            val imagenProducto = viewModel.imagenesProducto(producto)
+
+            Row {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+
+                ) {
+                    Image(
+                        painter = painterResource(id = imagenProducto),
+                        contentDescription = producto.nombre,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .size(100.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                        //.align(Alignment.CenterHorizontally)
+                    )
+                    //agrego el precio a todas los productos
+
+                }
+
                 //si los productos son distintos de bebida me enseña los ingredientes
                 if (producto.tipo != TIPO.BEBIDA) {
 
@@ -175,129 +192,163 @@ fun Home(viewModel: HomeViewModel ) {
                     )
 
                 }
-                //agrego el precio a todas los productos
+
+
+            }
+
+            //variable para seleccionar el tamaño
+            var seleccionar: SIZE? by remember { mutableStateOf(producto.size) }
+            //creo el menu desplegable para el tamaño
+            var expandir by remember { mutableStateOf(false) }//variable para expandir el menu
+            Row (modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+                ){
                 Text(
                     text = "${producto.precio}€",
                     //estilo para el precio
                     style = MaterialTheme.typography.titleLarge.copy(
-                        color = Color.Green, //color mas resaltado en verde
-                        fontWeight = FontWeight.Bold, //texto en negrita
+                        color = Color.Red, //color mas resaltado
                         fontSize = 20.sp // Aumentar el tamaño de la fuente
                     ),
                     modifier = Modifier.padding(8.dp)
                 )
-                //para poner los botones de + y - del producto
-                var contador by remember { mutableStateOf(0) }//variable contador
-                //variable para seleccionar el tamaño
-                var seleccionar by remember { mutableStateOf<SIZE?>(producto.size) }
 
-                Row(
-                    modifier = Modifier.padding(1.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    TextButton(
-                        onClick = { if (contador != 1) contador-- },
-                        modifier = Modifier.scale(1f)
-                        ) {
-
-                        Text("-")
-                    }
-
-                    Text(
-                        text = "$contador",//enseño la cantidad del contador
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        style = MaterialTheme.typography.titleLarge
-
-                    )
-                    TextButton(onClick = { contador++ },
-                        modifier = Modifier.scale(1f)
-                        ) {
-
-                        Text("+")
-                    }
-
-                    //creo el menu desplegable para el tamaño
-                    var expandir by remember { mutableStateOf(false) }//variable para expandir el menu
-
-                    if (producto.tipo == TIPO.PIZZA || producto.tipo == TIPO.BEBIDA) {
-                        Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.TopStart)) {
-                            TextButton(onClick = { expandir = true }) {
-                                Text(
-                                    seleccionar?.name ?: "Seleccionar tamaño"
-                                )//cuando se selecciona se muestra la opcion
+                if (producto.tipo == TIPO.PIZZA || producto.tipo == TIPO.BEBIDA) {
+                    Box(modifier = Modifier
+                        .wrapContentSize(Alignment.TopStart)) {
+                        TextButton(onClick = { expandir = true }) {
+                            Text(
+                                seleccionar?.name ?: "Seleccionar tamaño"
+                            )//cuando se selecciona se muestra la opcion
+                        }
+                        DropdownMenu(
+                            expanded = expandir,
+                            onDismissRequest = {
+                                expandir = false//cuando se hace click fuera se cierra
                             }
-                            DropdownMenu(
-                                expanded = expandir,
-                                onDismissRequest = {
-                                    expandir = false//cuando se hace click fuera se cierra
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Grande") },
+                                onClick = {
+                                    seleccionar = SIZE.GRANDE
+                                    expandir = false
                                 }
-                            ) {
-                                DropdownMenuItem(
-                                    text = { Text("Grande") },
-                                    onClick = {
-                                        seleccionar = SIZE.GRANDE
-                                        expandir = false
-                                    }
-                                )
-                                DropdownMenuItem(
-                                    text = { Text("Mediana") },
-                                    onClick = {
-                                        seleccionar = SIZE.MEDIANO
-                                        expandir = false
-                                    }
-                                )
-                                DropdownMenuItem(
-                                    text = { Text("Pequeña") },
-                                    onClick = {
-                                        seleccionar = SIZE.PEQUEÑO
-                                        expandir = false
-                                    }
-                                )
-                            }
-
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Mediana") },
+                                onClick = {
+                                    seleccionar = SIZE.MEDIANO
+                                    expandir = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Pequeña") },
+                                onClick = {
+                                    seleccionar = SIZE.PEQUEÑO
+                                    expandir = false
+                                }
+                            )
                         }
+
                     }
+
+                }
+            }
+
+
+            //para poner los botones de + y - del producto
+            var contador by remember { mutableStateOf(1) }//variable contador
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(
+                    onClick = { if (contador != 1) contador-- },
+                    modifier = Modifier.scale(1f)
+                ) {
+
+                    Text("-")
                 }
 
-                //boton para añadir el producto a la cesta
-                IconButton(
-                    onClick = {
-                        //llamo a mi funcion agregarACesta de HomeViewModel
-                        if (contador > 0) {
-                            viewModel.agregarACesta(producto, contador, seleccionar)
-                        }
-                    },
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                Text(
+                    text = "$contador",//enseño la cantidad del contador
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    style = MaterialTheme.typography.titleLarge
+
+                )
+                TextButton(
+                    onClick = { contador++ },
+                    modifier = Modifier.scale(1f)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.ShoppingCart,
-                        contentDescription = "Añadir a la cesta"
-                    )
+
+                    Text("+")
                 }
+                //boton para añadir el producto a la cesta
+                CarritoAñadir(contador, viewModel, producto, seleccionar)
 
             }
         }
+
+
     }
+}
+
 
 //METODO PARA MOSTRAR LOS PRODUCTOS EN LAS TARJETAS (usando la fun tarjetadeproductos)
 @Composable
-    fun ProductoItem(nombreDeProducto: String, productos : List<ProductoDTO>, viewModel: HomeViewModel){
-        Text(
-            text= nombreDeProducto,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(8.dp)
-        )
-        Column {
-            productos.forEach{producto-> TarjetadeProductos(producto, viewModel)}
+fun ProductoItem(nombreDeProducto: String, productos: List<ProductoDTO>, viewModel: HomeViewModel) {
+    Text(
+        text = nombreDeProducto,
+        style = MaterialTheme.typography.bodyLarge,
+        color = MaterialTheme.colorScheme.onSurface,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(8.dp)
+    )
+    Column {
+        productos.forEach { producto -> TarjetadeProductos(producto, viewModel) }
 
-        }
     }
+}
+
+//FUNCION PARA EL BOTON AÑADIR
+@Composable
+fun CarritoAñadir(contador: Int, viewModel: HomeViewModel, producto: ProductoDTO, seleccionar: SIZE?) {
+    //variable para enseñar mensaje añadido producto
+    val contexto = LocalContext.current
+    //boton para añadir el producto a la cesta
+    IconButton(
+        onClick = {
+            //llamo a mi funcion agregarACesta de HomeViewModel
+            if (contador > 0) {
+                viewModel.agregarACesta(producto, contador, seleccionar)
+
+                //muestro mensaje de producto añadido
+                Toast.makeText(
+                    contexto, "Se han añadido $contador ${producto.nombre}", Toast.LENGTH_SHORT
+                ).show()
+            }
+        },
+        //modifier = Modifier.align(Alignment.CenterHorizontally),
+        /*si el tamaño en pizza o en bebida no esta seleccionado no se habilita el boton para añadir
+        * o si es tipo pasta si se hablilita
+        */
+        enabled = seleccionar != null || producto.tipo == TIPO.PASTA
+
+    ) {
+        Icon(
+            imageVector = Icons.Default.ShoppingCart,
+
+            contentDescription = "Añadir a la cesta"
+        )
+    }
+}
 
 
 @Preview(showBackground = true)
 @Composable
-fun PantallaPreview(){
+fun PantallaPreview() {
     Mitema {
         Home(HomeViewModel())
     }
