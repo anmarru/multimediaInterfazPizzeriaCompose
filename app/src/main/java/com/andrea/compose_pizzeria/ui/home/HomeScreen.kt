@@ -175,9 +175,7 @@ fun TarjetadeProductos(producto: ProductoDTO, viewModel: HomeViewModel) {
                             .padding(8.dp)
                             .size(100.dp)
                             .clip(RoundedCornerShape(16.dp))
-                        //.align(Alignment.CenterHorizontally)
                     )
-                    //agrego el precio a todas los productos
 
                 }
 
