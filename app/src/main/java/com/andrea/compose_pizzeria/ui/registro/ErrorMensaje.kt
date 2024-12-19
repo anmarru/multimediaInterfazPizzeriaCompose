@@ -1,7 +1,7 @@
 package com.andrea.compose_pizzeria.ui.registro
 
 import androidx.lifecycle.MutableLiveData
-import com.andrea.compose_pizzeria.data.ClienteDTO
+import com.andrea.compose_pizzeria.data.model.ClienteDTO
 
 data class ErrorMensaje (
     val nombre : String?="",

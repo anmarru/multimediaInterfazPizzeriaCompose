@@ -50,8 +50,16 @@ android {
 }
 
 dependencies {
+    //se implementa esta libreria de android se usa para solicitudes HTTP para servicio rest
+    implementation (libs.retrofit2.retrofit)
+    implementation (libs.converter.gson)
+
+    //despues de poner enn el archivo toml implemento la libreria
+    implementation(libs.androidx.navigation.compose)
+    
     //importo el icono
     implementation(libs.androidx.material.icons.extended)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

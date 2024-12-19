@@ -2,10 +2,17 @@ package com.andrea.compose_pizzer
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.andrea.compose_pizzeria.data.ClienteDTO
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.andrea.compose_pizzeria.data.model.ClienteDTO
+import com.andrea.compose_pizzeria.data.repositories.ClienteRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
-class RegistroViewModel {
+class RegistroViewModel(val clienteRepository: ClienteRepository):ViewModel() {
+
     //creo mi variable registro con la clase Clientedto para tener los campos
     val cliente: MutableLiveData<ClienteDTO> = MutableLiveData ( ClienteDTO())
 
@@ -47,6 +54,7 @@ class RegistroViewModel {
     //funcion para registrar el cliente y se haga log del ClienteDTO
     fun registrarCliente(cliente: ClienteDTO){
         Log.d("Registro", "Cliente registrado: $cliente")
+
     }
 
     // creo la funcion que valida los campos y verifica si son validos
@@ -67,5 +75,24 @@ class RegistroViewModel {
         }else null
     }
 
+    fun onRegistrarClick() {
+        val clienteActual = cliente.value
+        if (clienteActual != null) {
+            viewModelScope.launch {
+                val result =
 
+                    clienteRepository.registrarCliente(clienteActual)
+                    withContext(Dispatchers.Main) {
+                    when (result.isSuccess) {
+                        true -> {
+                            cliente.value = result.getOrThrow()
+                        }
+                        false -> {
+                            Log.d("REGISTRO", "Error:$result")
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

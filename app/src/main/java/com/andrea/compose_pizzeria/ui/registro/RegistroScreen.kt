@@ -1,6 +1,5 @@
 package com.andrea.compose_pizzeria.ui.registro
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -21,13 +19,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.andrea.compose_pizzeria.R
-import com.andrea.compose_pizzeria.data.ClienteDTO
+import com.andrea.compose_pizzeria.data.model.ClienteDTO
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,12 +38,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.andrea.compose_pizzer.RegistroViewModel
+import com.andrea.compose_pizzeria.data.network.ClienteApiService
+import com.andrea.compose_pizzeria.data.repositories.ClienteRepository
+import com.andrea.compose_pizzeria.navigation.Screen
 import com.andrea.compose_pizzeria.ui.componentes.EmailTextField
 
 
 @Composable
-fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
+fun PantallaInicioRegistro(viewModel: RegistroViewModel, navController: NavController){
 
     val cliente: ClienteDTO by viewModel.cliente.observeAsState(ClienteDTO())
     //variable para color del OutlinedTextField
@@ -64,7 +67,7 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
     LazyColumn(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxSize()
-            .background(Color(180, 163, 94, 215))
+            .background(Color(108, 86, 42, 215))
             .padding(15.dp,20.dp,15.dp,8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -200,7 +203,9 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
 
             Button(onClick = {
                 //al darle al boton de registrarse se llama al metodo del registrar cliente del RegistroviewModel
-                viewModel.registrarCliente(cliente)
+                //viewModel.registrarCliente(cliente)
+                viewModel.onRegistrarClick()
+                navController.navigate(Screen.Login.route)//navega al home al registrarse
             },
                 modifier = Modifier
                     .padding(start = 8.dp),
@@ -210,6 +215,11 @@ fun PantallaInicioRegistro(viewModel: RegistroViewModel = RegistroViewModel()){
             ) {
                 TextoCentrado(text="Registrarse")
 
+            }
+
+            TextButton ( onClick ={navController.navigate(Screen.Login.route)},
+              ){
+                Text(text = "Ya tienes cuenta?")
             }
         }
 
@@ -238,5 +248,5 @@ fun TextoCentrado(text: String){
 @Preview(showBackground = true)
 @Composable
 fun PantallaPreview(){
-    PantallaInicioRegistro(RegistroViewModel())
+   // PantallaInicioRegistro(RegistroViewModel())
 }

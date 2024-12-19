@@ -1,4 +1,4 @@
-package com.andrea.compose_pizzeria.data
+package com.andrea.compose_pizzeria.data.model
 
 import java.util.Date
 

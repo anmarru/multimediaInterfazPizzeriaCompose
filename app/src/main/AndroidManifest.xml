@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- se le da permiso para acceso a internet y poder acceder a los clientes/ pedidos-->
+   <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"

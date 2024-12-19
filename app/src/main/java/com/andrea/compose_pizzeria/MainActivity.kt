@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.compose.rememberNavController
 import com.andrea.compose_pizzer.RegistroViewModel
+import com.andrea.compose_pizzeria.navigation.AppNavigation
 import com.andrea.compose_pizzeria.ui.home.Home
 import com.andrea.compose_pizzeria.ui.home.HomeViewModel
 import com.andrea.compose_pizzeria.ui.login.LoginViewModel
@@ -18,19 +20,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
        
         setContent {
-           /* ComposepizzeriaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+               /* Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
-                }
-            }*/
+                }*/
+
 
             Mitema {
               // PantallaPrincipalLogin(LoginViewModel())
                 //PantallaInicioRegistro(RegistroViewModel())
-                Home(HomeViewModel())
+                //Home(HomeViewModel())
+                val navController = rememberNavController()
+                AppNavigation(navController = navController)
             }
         }
     }
