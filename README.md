@@ -2,8 +2,8 @@ Descripción
 Esta aplicación móvil ofrece una experiencia interactiva y eficiente para gestionar pedidos en una pizzería. Los usuarios pueden registrarse o iniciar sesión,
 navegar por el catálogo de productos, seleccionar sus favoritos y agregarlos a una cesta de compra. Todo esto se gestiona a través de un backend que utiliza 
 servicios REST y un servidor JSON para almacenar tanto los usuarios registrados como los productos disponibles.
-Características principales
 
+Características principales
 Registro e inicio de sesión:
 Los usuarios pueden registrarse con sus datos y autenticarse para acceder a la aplicación.
 Gestión de usuarios mediante almacenamiento en un servidor JSON.
